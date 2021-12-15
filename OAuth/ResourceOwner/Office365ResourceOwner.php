@@ -30,6 +30,15 @@ class Office365ResourceOwner extends GenericOAuth2ResourceOwner
         'lastname' => 'surname',
     ];
 
+    public function getAuthorizationUrl($redirectUri, array $extraParameters = [])
+    {
+        $url = parent::getAuthorizationUrl($redirectUri, array_merge([
+            'prompt' => $this->options['prompt'],
+        ], $extraParameters));
+
+        return $url;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -53,6 +62,12 @@ class Office365ResourceOwner extends GenericOAuth2ResourceOwner
             'authorization_url' => 'https://login.microsoftonline.com/common/oauth2/authorize',
             'access_token_url' => 'https://login.microsoftonline.com/common/oauth2/token',
             'infos_url' => 'https://graph.microsoft.com/v1.0/me',
+            'prompt' => null,
         ]);
+
+        $resolver
+            // sometimes we need to force for approval prompt
+            ->setAllowedValues('prompt', ['login', 'none', 'consent', 'select_account', null])
+        ;
     }
 }
