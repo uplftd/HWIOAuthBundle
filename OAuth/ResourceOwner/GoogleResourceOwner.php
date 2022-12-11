@@ -46,6 +46,7 @@ class GoogleResourceOwner extends GenericOAuth2ResourceOwner
             'approval_prompt' => $this->options['approval_prompt'],
             'request_visible_actions' => $this->options['request_visible_actions'],
             'prompt' => $this->options['prompt'],
+            'include_granted_scopes' => $this->options['include_granted_scopes'],
         ], $extraParameters));
 
         // This parameter have specific value (uses "&" as a separator of domains)
@@ -89,6 +90,7 @@ class GoogleResourceOwner extends GenericOAuth2ResourceOwner
             'login_hint' => null,
             'prompt' => null,
             'request_visible_actions' => null,
+            'include_granted_scopes' => null,
         ]);
 
         $resolver
@@ -100,6 +102,7 @@ class GoogleResourceOwner extends GenericOAuth2ResourceOwner
             ->setAllowedValues('display', ['page', 'popup', 'touch', 'wap', null])
             ->setAllowedValues('login_hint', ['email address', 'sub', null])
             ->setAllowedValues('prompt', ['consent', 'select_account', null])
+            ->setAllowedValues('include_granted_scopes', ['true', 'false', null])
         ;
     }
 }
